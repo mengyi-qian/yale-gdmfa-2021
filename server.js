@@ -4,7 +4,6 @@ const app = module.exports = express()
 let http = require('http').createServer(app)
 let port = process.env.PORT || 3000
 
-// const routes = require('./routes')
 // const fileUpload = require('express-fileupload')
 const bodyParser = require('body-parser')
 
