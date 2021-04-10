@@ -1,0 +1,139 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+div#container {
+  width: 1000px;
+  height: auto;
+  margin: auto;
+  margin-top: 8vw;
+  margin-bottom: 8vw;
+  border: 1px dotted black;
+  display: flex;
+  flex-flow: row wrap;
+}
+div#left {
+  width: 450px;
+  margin: 0;
+  padding: 25px;
+}
+div#right {
+  width: 450px;
+  margin: 0;
+  padding: 25px;
+}
+table,form#form {
+  width: 450px;
+  margin: 0;
+  padding: 0;
+}
+select,
+input,
+textarea,
+#minutes,
+#upload-button{
+  float: right;
+  margin: 0;
+}
+#caption,#link {
+  width: 320px;
+}
+#fileupload {
+  width: 200px;
+}
+hr {
+  border: 0px;
+  border-top: 1px dotted black;
+  padding: 0;
+  margin-bottom: 18px;
+}
+th,td {
+  text-align: left;
+  vertical-align: top;
+  height: 1.3em;
+  line-height: 1.3em;
+  padding: 0;
+  position: relative;
+}
+col {
+  display: table-column;
+}
+.name {
+  display: inline-block;
+  position: relative;
+  padding-right: 1em;
+/*   cursor: pointer; */
+}
+span {
+/*   z-index: -1; */
+  pointer-events: none;
+}
+button[type="submit"] {
+  position: absolute;
+  left: 0;
+  font-size: 9pt;
+  padding: 0px 2px;
+  margin: auto;
+}
+form.button {
+  display: none;
+  margin: 0;
+/*   cursor: pointer; */
+}
+
+#upload-button button {
+  cursor: not-allowed;
+}
+
+
+.color {
+  width: 10px;
+  height: 10px;
+  border: 1px solid black;
+  margin-top: 3px;
+}
+.red {
+  background-color: red;
+}
+.yellow {
+  background-color: yellow;
+}
+.green {
+  background-color: chartreuse;
+}
+.cyan {
+  background-color: cyan;
+}
+.blue {
+  background-color: blue;
+}
+.magenta {
+  background-color: magenta;
+}
+.black {
+  background-color: black;
+}
+
+@media only screen and (max-width: 1200px) {
+  div#container {
+    width:500px;
+    flex-flow: column wrap;
+  }
+}
+@media only screen and (max-width: 520px) {
+  div#container {
+    width: 100vw;
+    margin: 0px;
+    border: 0px;
+    flex-flow: column wrap;
+  }
+  div#left,div#right,table,form#form {
+    width: calc(100vw - 50px);
+  }
+  #caption,#link {
+    width: 200px;
+  }
+  button {
+    padding: 0px;
+  }
+}

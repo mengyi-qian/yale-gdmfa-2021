@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="backend for exhibition website">
+    <title>backend</title>
+    <link rel="stylesheet" href="/backend.css">
+    <script src="/backend.js" defer></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io()
+      
+      // get table structure: i = cam, j = color
+      const table = [
+        ["cam_01", "red", "green", "black"],
+        ["cam_02", "red", "cyan", "blue"],
+        ["cam_03", "yellow", "cyan", "magenta"],
+        ["cam_04", "blue", "magenta", "black"],
+        ["cam_05", "red", "cyan", "black"],
+        ["cam_06", "green", "blue", "magenta"]
+      ]
+      
+      // set table structure: i = cam, j = color
+      let nameArray = [
+        ["cam_01", ["red"], ["green"], ["black"]],
+        ["cam_02", ["red"], ["cyan"], ["blue"]],
+        ["cam_03", ["yellow"], ["cyan"], ["magenta"]],
+        ["cam_04", ["blue"], ["magenta"], ["black"]],
+        ["cam_05", ["red"], ["cyan"], ["black"]],
+        ["cam_06", ["green"], ["blue"], ["magenta"]]
+      ]
+      
+      // get all the names for each cam & color
+      function getName(item,table,nameArray) {
+        // loop through each cam
+        for (let i = 0; i < table.length; i++) {
+          if (item.meta.camera === table[i][0]) {
+            // loop through each color
+            for (let j = 1; j < table[i].length; j++) {
+              if (item.meta.color === table[i][j]){
+                nameArray[i][j].push(`
+                  <div class="name">
+                    <span>${item.meta.student}(${item.meta.duration})</span>
+                    <form action="/cancel" method="post" class="button"><button type="submit" value=${item.meta.id} name="id">cancel</button></form>
+                  </div>
+                `)
+              }
+            }
+          }
+        }
+      }
+      
+      // get all the names for each cam & color
+      function getNameList(item,table,nameArray) {
+        // loop through each cam
+        for (let i = 0; i < table.length; i++) {
+          if (item.meta.camera === table[i][0]) {
+            // loop through each color
+            for (let j = 1; j < table[i].length; j++) {
+              if (item.meta.color === table[i][j]){
+                nameArray[i][j].push(`
+                  <div class="name">
+                    <span>${item.meta.student}(${item.meta.duration})</span>
+                    <form action="/cancel" method="post" class="button"><button type="submit" value=${item.filename} name="id">cancel</button></form>
+                  </div>
+                `)
+              }
+            }
+          }
+        }
+      }
+      
+      function writeNameList(array, className) {
+        let current = ''
+        let queue = ''
+        // for each row of the table
+        if (array.length > 1) {
+          current = `${array[1]}`
+          for(let i = 2; i < array.length; i++) {
+            queue += `${array[i]}`
+          }
+        }
+        // let outputList = `<td>${current}</td><td>${queue}</td>`
+        // document.getElementsByClassName(className)[0].parentNode.insertAdjacentHTML("afterend", outputList)
+        let slot = document.getElementsByClassName(className)[0].parentNode
+        slot.nextElementSibling.innerHTML = current
+        slot.nextElementSibling.nextElementSibling.innerHTML = queue
+      }
+            
+      // write name list to the table
+      function writeTable(nameArray, table) {
+        // loop through each cam
+        for (let i = 0; i < nameArray.length; i++) {
+          // loop through each color
+          for (let j = 1; j < nameArray[i].length; j++) {
+            writeNameList(nameArray[i][j], `${table[i][0]} ${table[i][j]}`)
+          }
+        }
+      }
+      
+      // set dropbox upload links for each folder
+      const uploadLinks = {
+        cam_01_red:     "https://www.dropbox.com/request/BFoFSAGDzAODORLZw7Ct",
+        cam_01_green:   "https://www.dropbox.com/request/gb1aw9oNHIMFwl5827Dx",
+        cam_01_black:   "https://www.dropbox.com/request/Fz8WjKywbHkOS9gcDzlj",
+        cam_02_red:     "https://www.dropbox.com/request/H1kb5jjZeLIcHuaMOi8c",
+        cam_02_cyan:    "https://www.dropbox.com/request/oGs8uFznQvgVKYcXUpxv",
+        cam_02_blue:    "https://www.dropbox.com/request/2k6ePUknSbH3Xs7NFsxq",
+        cam_03_yellow:  "https://www.dropbox.com/request/3kSazOM8YI9uP4qAPRsq",
+        cam_03_cyan:    "https://www.dropbox.com/request/WnIbvt0f1caPHr1MvhaM",
+        cam_04_blue:    "https://www.dropbox.com/request/qXGZ1m6J3BMZSVIcMTiB",
+        cam_04_magenta: "https://www.dropbox.com/request/qwUuNReMOr1hUgJhyA8p",
+        cam_05_red:     "https://www.dropbox.com/request/71MUxTan08oWcGl0xbz8",
+        cam_05_cyan:    "https://www.dropbox.com/request/cO696iwOzxO7iXhxyuwq",
+        cam_05_black:   "https://www.dropbox.com/request/FJSuvKmzsfsKKr2KXxDz",
+        cam_06_green:   "https://www.dropbox.com/request/nY8bhkONByI4FOZsYMVJ",
+        cam_06_blue:    "https://www.dropbox.com/request/jS6xPZOiD9r2YD6bKjng",
+        cam_06_magenta: "https://www.dropbox.com/request/8ossuDQvblQAWDENxPkV"
+      }
+      
+      
+      
+      window.onload = async () => {
+        
+        let form = document.querySelector("#form")
+        let student = document.querySelector("#students")
+        let camera = document.querySelector("#cameras")
+        let color = document.querySelector("#colors")
+        let title = document.querySelector("#title")
+        let caption = document.querySelector("#caption")
+        let duration = document.querySelector("#duration")
+        // let uploadTimestamp = Date.now()
+        // let id = `${uploadTimestamp}_${cameras.value}_${colors.value}_${students.value}_${duration.value}`
+        
+        form.addEventListener('submit', (e)=>{
+          e.preventDefault()
+          // console.log("submit")
+          let meta = {
+            // "id": id,
+            "uploadTimestamp": Date.now(),
+            "student": students.value,
+            "camera": camera.value,
+            "color": color.value,
+            "title": title.value,
+            "caption": caption.value,
+            "duration": duration.value
+          }
+          // console.log(meta)
+          socket.emit('new submission', meta) 
+        })
+        
+        socket.on('generate filename', (submittedItem)=>{
+          // get latest submission
+          getName(submittedItem,table,nameArray)
+          // write name list to the table
+          writeTable(nameArray, table)
+          
+          // get filename
+          document.querySelector('#filename').innerHTML = submittedItem.filename
+          // get dropbox file upload link
+          let folder =  submittedItem.meta.camera + "_" + submittedItem.meta.color
+          document.querySelector('#upload-button').href = uploadLinks[folder]
+          document.querySelector('#upload-button button').style.cursor = "pointer"
+          // sat filename background
+          document.querySelector('#filename').className = submittedItem.meta.color
+        })
+        
+        
+        socket.on('refresh data', (queue)=>{
+          //reset nameArray
+          nameArray = [
+            ["cam_01", ["red"], ["green"], ["black"]],
+            ["cam_02", ["red"], ["cyan"], ["blue"]],
+            ["cam_03", ["yellow"], ["cyan"], ["magenta"]],
+            ["cam_04", ["blue"], ["magenta"], ["black"]],
+            ["cam_05", ["red"], ["cyan"], ["black"]],
+            ["cam_06", ["green"], ["blue"], ["magenta"]]
+          ]
+          
+          // get all the names for each cam & color
+          for(let item of queue) {
+            getNameList(item,table,nameArray)
+          }
+          // console.log(nameArray)
+
+          // write name list to the table
+          writeTable(nameArray, table)
+          
+          
+          // add cancel buttons
+          let names = document.querySelectorAll('.name')
+          // console.log(names)
+          for ( let name of names ) {
+            // show cancel button on hover
+            name.addEventListener('mouseenter', () => {
+              name.firstElementChild.style.color = "transparent"
+              name.lastElementChild.style.display = "inline"
+            })
+            name.addEventListener('mouseleave', () => {
+              name.firstElementChild.style.color = "black"
+              name.lastElementChild.style.display = "none"
+            })
+          }
+          
+          
+          // confirm to cancel 
+          let cancelButtons = document.querySelectorAll('form.button')
+
+          for ( let cancelButton of cancelButtons ) {
+            // console.log(cancelButton.firstElementChild.value)
+            cancelButton.addEventListener('submit', (e) => {
+              e.preventDefault()
+              let confirm = window.confirm('Are you sure you want to cancel this stream?')
+              if (confirm) {
+                let cancelledItem = cancelButton.firstElementChild.value
+                socket.emit('cancel', cancelledItem)
+              }
+            })
+          }
+
+        })
+
+        
+        
+        
+ 
+      }
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="left">
+        YGDMFA’21 EXHIBITION
+        <p><em>queue it up!</em></p>
+        <hr>
+        <form action="/submit" method="post" enctype="multipart/form-data" id="form">
+          <label for="students">Your name:</label>
+          <select name="students" id="students">
+            <option value="Herdimas">Herdimas</option>
+            <option value="Milo">Milo</option>
+            <option value="Bianca">Bianca</option>
+            <option value="Furqan">Furqan</option>
+            <option value="Harin">Harin</option>
+            <option value="Jun">Jun</option>
+            <option value="Minhwan">Minhwan</option>
+            <option value="Nick">Nick</option>
+            <option value="Anezka">Anezka</option>
+            <option value="Luiza">Luiza</option>
+            <option value="Ana">Ana</option>
+            <option value="Mengyi">Mengyi</option>
+            <option value="Anna">Anna</option>
+            <option value="Mianwei">Mianwei</option>
+          </select>
+          <br><br>
+
+          <label for="cameras">Camera:</label>
+          <select name="cameras" id="cameras">
+            <option value="cam_01">cam_01</option>
+            <option value="cam_02">cam_02</option>
+            <option value="cam_03">cam_03</option>
+            <option value="cam_04">cam_04</option>
+            <option value="cam_05">cam_05</option>
+            <option value="cam_06">cam_06</option>
+          </select>
+          <br><br>
+
+          <label for="colors" position>Color:</label>
+          <select name="colors" id="colors">
+            <option value="red">red</option>
+            <option value="yellow">yellow</option>
+            <option value="green">green</option>
+            <option value="cyan">cyan</option>
+            <option value="blue">blue</option>
+            <option value="magenta">magenta</option>
+            <option value="black">black</option>
+            <option value="grey" disabled>floor (grey)</option>
+            <option value="white" disabled>wall (white)</option>
+          </select>
+          <br><br>
+
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title" placeholder="title"><br><br>
+          <!--           
+          <label for="year">Year:</label>
+          <input type="text" id="year" name="year" placeholder="2021"><br><br>
+          -->
+          <label for="caption">Caption:</label>
+          <textarea id="caption" name="caption" rows="4"></textarea>
+          <br><br><br><br><br>
+          <!-- 
+          <label for="link">Media:</label>
+          <input type="text" id="link" name="link"  placeholder="https://vimeo.com/manage/489255388/general"><br><br>
+          
+          <label for="fileupload">Upload:</label>
+          <input type="file" name="fileupload" id="fileupload" /><br><br>
+          -->
+
+          <label for="duration">Duration:</label>
+          <select name="duration" id="duration">
+            <option value="5m">loop / 5min</option>
+            <option value="15m">loop / 15min</option>
+            <option value="30m">loop / 30min</option>
+            <option value="1h">loop / 1hr</option>
+            <option value="2h">loop / 2hr</option>
+            <option value="3h">loop / 3hr</option>
+            <option value="4h">loop / 4hr</option>
+            <option value="5h">loop / 5hr</option>
+            <option value="6h">loop / 6hr</option>
+          </select>
+<!--           <span id="minutes">&nbsp;minutes (1-360)</span> -->
+<!--           <input type="number" name="duration" id="duration" min="1" max="360"> -->
+
+          <br><br><br><br>
+          <input type="submit" value="add to queue">
+        </form>
+        
+        <br><br><br><br>
+        <hr>
+        
+        <label>Please rename your filename as:</label>
+        <a target="_blank" id="upload-button">
+          <button>upload</button>
+        </a>
+        <br><br>
+        <label><span id="filename"></span></label>
+        
+      </div>
+
+      <div id="right">
+        <strong>Queue</strong> <em>(live, automatic updates)</em><br><br>
+        <table>
+          <colgroup>
+            <col span="1" style="width:60px">
+            <col span="1" style="width:25px">
+            <col span="1" style="width:110px">
+            <col span="1" style="width:220px">
+          </colgroup>
+          <tr>
+            <th></th>
+            <th></th>
+            <th>current</th>
+            <th>queue</th>
+          </tr>
+          <tr>
+            <td>cam_01</td>
+            <td><div class="color cam_01 red"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><div class="color cam_01 green"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><div class="color cam_01 black"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>cam_02</td>
+            <td><div class="color cam_02 red"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><div class="color cam_02 cyan"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><div class="color cam_02 blue"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>cam_03</td>
+            <td><div class="color cam_03 yellow"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><div class="color cam_03 cyan"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><div class="color cam_03 magenta"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>cam_04</td>
+            <td><div class="color cam_04 blue"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><div class="color cam_04 magenta"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><div class="color cam_04 black"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>cam_05</td>
+            <td><div class="color cam_05 red"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><div class="color cam_05 cyan"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><div class="color cam_05 black"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>cam_06</td>
+            <td><div class="color cam_06 green"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><div class="color cam_06 blue"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><div class="color cam_06 magenta"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+  </body>
+</html>
