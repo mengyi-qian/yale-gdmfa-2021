@@ -12,8 +12,9 @@ let io = require('socket.io')(http)
 const low = require('lowdb')
 
 // http://expressjs.com/en/starter/static-files.html
+app.use(express.urlencoded({extended: true})) 
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true })); 
+// app.use(bodyParser.urlencoded({ extended: true })); 
 // app.use(fileUpload());
 
 // https://github.com/typicode/lowdb usage instructions
