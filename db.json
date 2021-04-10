@@ -1,3 +1,18 @@
 {
-  "queue": []
+  "queue": [
+    {
+      "filename": "1618024920275_1618025220275_cam_01_red_Herdimas_5m",
+      "startTimestamp": 1618024920275,
+      "endTimestamp": 1618025220275,
+      "meta": {
+        "uploadTimestamp": 1618024920275,
+        "student": "Herdimas",
+        "camera": "cam_01",
+        "color": "red",
+        "title": "xxx",
+        "caption": "ddddd",
+        "duration": "5m"
+      }
+    }
+  ]
 }
