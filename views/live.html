@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ALL AT ONCE - YALE GD'21</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+    <script src="/script.js" defer></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io()
+      
+      window.onload = async () => {
+        
+        let cameraNavs = document.querySelectorAll('input[type="radio"]')
+        let cameraContents = document.querySelectorAll('iframe')
+
+        let n = Math.floor(Math.random() * 6)
+        show(cameraContents[n])
+        cameraNavs[n].checked = true;
+        let cameraNo = cameraNavs[n].value
+        socket.emit('camera switch', cameraNo) 
+
+        cameraNavs.forEach((cameraNav) => {
+          cameraNav.addEventListener('change',() => {
+            if (cameraNav.checked) {
+              cameraNo = cameraNav.value
+              cameraContents.forEach((cameraContent)=>{hide(cameraContent)})
+              let activeCamera = document.getElementById(cameraNo)
+              show(activeCamera)
+              socket.emit('camera switch', cameraNo) 
+            }
+          })
+        })
+        
+        
+        socket.on('set caption', (captionOutput) => {
+          let caption = "Currently no stream"
+          if ( captionOutput !== "" ) {
+            caption = "Now streaming: " + captionOutput
+          }
+          document.querySelector('#caption').setAttribute("title", caption)
+        })
+        
+        
+        
+      }
+      
+      
+    </script>
+  </head>  
+  <body>   
+    <div id="video-container">
+<!--       
+      <video width="100%" playsinline autoplay muted loop>
+        <source src="https://cdn.glitch.com/239d3f8b-5f6a-4348-b652-fc0274b93860%2FWhatsApp%20Image%202021-03-15%20at%206.40.28%20PM.mp4?v=1615923366488">
+      </video>
+       -->
+
+      <iframe width="100%" height="100%" id="cam_01"
+              src="https://www.youtube.com/embed/TGLV2Fw-k5I?autoplay=1&controls=0&mute=1&showinfo=0" 
+              frameborder="0" scrolling="no"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+      </iframe>
+      
+      <iframe width="100%" height="100%" id="cam_02"
+              src="https://www.youtube.com/embed/jEnd8JIMii4?autoplay=1&controls=0&mute=1&showinfo=0" 
+              frameborder="0" scrolling="no"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+      </iframe>
+      
+      <iframe width="100%" height="100%" id="cam_03"
+              src="https://www.youtube.com/embed/RJEZaM1ZjUc?autoplay=1&controls=0&mute=1&showinfo=0" 
+              frameborder="0" scrolling="no"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+      </iframe>
+      
+      <iframe width="100%" height="100%" id="cam_04"
+              src="https://www.youtube.com/embed/zofBinqC2F4?autoplay=1&controls=0&mute=1&showinfo=0" 
+              frameborder="0" scrolling="no"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+      </iframe>
+      
+      <iframe width="100%" height="100%" id="cam_05"
+              src="https://www.youtube.com/embed/sX6J4t2lRu0?autoplay=1&controls=0&mute=1&showinfo=0" 
+              frameborder="0" scrolling="no"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+      </iframe>
+      
+      <iframe width="100%" height="100%" id="cam_06"
+              src="https://www.youtube.com/embed/Nep1qytq9JM?autoplay=1&controls=0&mute=1&showinfo=0" 
+              frameborder="0" scrolling="no"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+      </iframe>
+      
+    </div>
+
+    
+    <img src="/" id="caption">
+    
+    <nav>
+      <input type="radio" id="cam_01_nav" name="camera" value="cam_01">
+      <label for="cam_01_nav"> cam_01 </label>
+      <input type="radio" id="cam_02_nav" name="camera" value="cam_02">
+      <label for="cam_02_nav"> cam_02 </label>
+      <input type="radio" id="cam_03_nav" name="camera" value="cam_03">
+      <label for="cam_03_nav"> cam_03 </label>
+      <input type="radio" id="cam_04_nav" name="camera" value="cam_04">
+      <label for="cam_04_nav"> cam_04 </label>
+      <input type="radio" id="cam_05_nav" name="camera" value="cam_05">
+      <label for="cam_05_nav"> cam_05 </label>
+      <input type="radio" id="cam_06_nav" name="camera" value="cam_06">
+      <label for="cam_06_nav"> cam_06 </label>
+    </nav>
+
+    <a id="about">About</a>
+    <div id="about-container">
+      <p><i>ALL AT ONCE</i><br>Yale School of Art<br>Graphic Design MFA 2021 Thesis Show</p>
+      <p>On view April 22–28</p>
+      <p>All at once—looking back, tripping forward, standing still. All at once—plugged in, displayed, replayed, looped. All at once—planes, edges corners. All at once—outwards, inwards, downwards, backwards. All at once—far away, close by, in motion. All at once—displaced, misplaced, replaced. All at once—everything, nothing, fleeting. All at once.
+</p>
+      <p><i>All at Once</i> brings together the work of this year’s graphic design MFA graduating class through a unique merging of the physical and the virtual of our current environment.</p>
+      <br><br><br><br><br><br>
+      <p>YDG MFA 2021:</p>
+      <ul>
+        <li>Herdimas Anggara</li>
+        <li>Milo Bonacci</li>
+        <li>Bianca Ibarlucea</li>
+        <li>Furqan Jawed</li>
+        <li>Harin Jung</li>
+        <li>Jun Jung</li>
+        <li>Minhwan Kim</li>
+        <li>Nick Massarelli</li>
+        <li>Anezka Minarikova</li>
+        <li>Luiza Dale</li>
+        <li>Ana Lobo</li>
+        <li>Mengyi Qian</li>
+        <li>Anna Sagström</li>
+        <li>Mianwei Wang</li>
+      </ul>
+      
+    </div>
+    
+    
+  </body>
+</html>
