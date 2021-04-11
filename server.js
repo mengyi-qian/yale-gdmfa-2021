@@ -5,7 +5,7 @@ let http = require('http').createServer(app)
 let port = process.env.PORT || 3000
 
 // const fileUpload = require('express-fileupload')
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 
 let io = require('socket.io')(http)
 const low = require('lowdb')
@@ -26,12 +26,12 @@ const db = low(adapter)
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
-// app.get('/live', function(req, res) {
-//   res.sendFile(__dirname + '/views/live.html');
-// });
-// app.get('/panel', function(req, res) {
-//   res.sendFile(__dirname + '/views/backend.html');
-// });
+app.get('/live', function(req, res) {
+  res.sendFile(__dirname + '/views/live.html');
+});
+app.get('/panel', function(req, res) {
+  res.sendFile(__dirname + '/views/backend.html');
+});
 
 db.defaults({queue: []}).write()
 let queue = db.get('queue')

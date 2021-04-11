@@ -1,7 +1,7 @@
 {
-  "name": "gd2021-backend-dropbox",
+  "name": "all-at-once",
   "version": "0.1.0",
-  "description": "GD2021 backend, uploading files to dropbox",
+  "description": "ALL AT ONCE , YALE GD2021 THESIS EXHIBITION",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -18,7 +18,7 @@
     "node": "12.x"
   },
   "repository": {
-    "url": "https://glitch.com/~gd2021-backend-dropbox"
+    "url": "https://glitch.com/~all-at-once"
   },
   "license": "MIT",
   "keywords": [
