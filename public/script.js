@@ -8,16 +8,16 @@ function show(element) {
  
 let aboutButton = document.querySelector('#about')
 let aboutContainer = document.querySelector('#about-container')
-let navMessages = document.querySelector('nav.messages')
+// let navMessages = document.querySelector('nav.messages')
 aboutButton.addEventListener('click', () => {
   show(aboutContainer)
   hide(aboutButton)
-  hide(navMessages)
+//   hide(navMessages)
 })
 aboutContainer.addEventListener('click', () => {
   hide(aboutContainer)
   show(aboutButton)
-  show(navMessages)
+//   show(navMessages)
 })
 
 
