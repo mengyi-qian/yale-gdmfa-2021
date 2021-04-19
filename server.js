@@ -26,12 +26,12 @@ const db = low(adapter)
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
-app.get('/live', function(req, res) {
-  res.sendFile(__dirname + '/views/live.html');
-});
-app.get('/panel', function(req, res) {
-  res.sendFile(__dirname + '/views/backend.html');
-});
+// app.get('/live', function(req, res) {
+//   res.sendFile(__dirname + '/views/live.html');
+// });
+// app.get('/panel', function(req, res) {
+//   res.sendFile(__dirname + '/views/backend.html');
+// });
 
 db.defaults({queue: []}).write()
 let queue = db.get('queue')
