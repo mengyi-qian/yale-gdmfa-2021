@@ -3,7 +3,6 @@ body, * {
   padding: 0;
   font-family: 'Arial';
 }
-
 body {
   overflow: hidden;
   background-color: black;
@@ -22,7 +21,8 @@ ul {
   list-style: none; !important
 }
 
-div.mapping,
+
+
 div#gif-container,
 div#video-container {
   position: absolute;
@@ -58,31 +58,26 @@ div#video-container {
   height: 100%;
   pointer-events: none;
 }
-
 img.gif {
   width: 100vw;
   height:100vh;
   height: calc(var(--vh, 1vh) * 100); /* mobile */
 }
 
+
+
 img#caption {
-  opacity: 0;
-  z-index: 50;
-}
-
-img,video,iframe {
-  width: 100%;
-}
-
-
-#caption {
   position: absolute;
   top: 5vh;
   left: 5vw;
   width: 90vw;
   height: 90vh;
   height: calc(var(--vh, 1vh) * 90); /* mobile */
+  opacity: 0;
+  z-index: 50;
 }
+
+
 
 nav.cameras {
   position: fixed;
@@ -121,6 +116,7 @@ ul#message-list > li {
 }
 
 
+
 a#about {
   position: fixed;
   bottom: 20px;
@@ -137,8 +133,6 @@ a#about {
   left: 0px;
   width: 100vw;
   height: calc(100vh - 50px);
-/*   height:100vh; */
-/*   height: calc(var(--vh, 1vh) * 100); */
   height: calc(var(--vh, 1vh) * 100 - 50px); /* mobile */
   display: none;
   overflow: scroll;
@@ -152,8 +146,6 @@ a#about {
   line-height: 1.2em;
   padding: 20px;
 }
-
-
 #about-container p#credit,
 #about-container p#note {
   font-size: 0.9em;
@@ -163,62 +155,92 @@ a#about {
   padding-bottom: 0px;
 }
 
+
+
+@media only screen and (min-width: 2281px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 64px;
+  }
+}
+@media only screen and (max-width: 2280px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 56px;
+  }
+}
+@media only screen and (max-width: 2140px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 50px;
+  }
+}
+@media only screen and (max-width: 1920px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 46px;
+  }
+}
+@media only screen and (max-width: 1840px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 43px;
+  }
+}
+@media only screen and (max-width: 1680px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 40px;
+  }
+}
 @media only screen and (max-width: 1440px) {
   #about-container p,
   #about-container ul {
     font-size: 38px;
   }
 }
-
 @media only screen and (max-width: 1240px) {
   #about-container p,
   #about-container ul {
     font-size: 36px;
   }
 }
-
 @media only screen and (max-width: 1080px) {
   #about-container p,
   #about-container ul {
     font-size: 34px;
   }
 }
-
 @media only screen and (max-width: 960px) {
   #about-container p,
   #about-container ul {
     font-size: 32px;
   }
 }
-
 @media only screen and (max-width: 840px) {
   #about-container p,
   #about-container ul {
     font-size: 30px;
   }
 }
-
 @media only screen and (max-width: 640px) {
   #about-container p,
   #about-container ul {
     font-size: 28px;
   }
 }
-
 @media only screen and (max-width: 560px) {
   #about-container p,
   #about-container ul {
     font-size: 26px;
   }
 }
-
 @media only screen and (max-width: 480px) {
   #about-container p,
   #about-container ul {
     font-size: 24px;
   }
 }
-
 @media only screen and (max-width: 400px) {
   #about-container p,
   #about-container ul {
