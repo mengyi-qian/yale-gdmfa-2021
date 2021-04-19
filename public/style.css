@@ -98,21 +98,23 @@ nav.cameras > input {
 nav.messages {
   position: fixed;
   top: 20px;
-  right: 20px;
+  left: 0;
   color: white;
   z-index: 99;
-  line-height: 1.5em;
-  width: 400px;
-  text-align: right;
+  line-height: 1em;
+  width: 100vw;
+  text-align: left;
 }
 nav.messages marquee {
-  height: 8em;
+  height: 1em;
 }
 ul#message-list {
-  text-align: right;
+  text-align: left;
 }
 ul#message-list > li {
   margin-bottom: 0.2em;
+  display: inline;
+  padding-left: 30px;
 }
 
 
@@ -178,67 +180,67 @@ a#about {
 @media only screen and (max-width: 1920px) {
   #about-container p,
   #about-container ul {
-    font-size: 46px;
+    font-size: 44px;
   }
 }
 @media only screen and (max-width: 1840px) {
   #about-container p,
   #about-container ul {
-    font-size: 43px;
+    font-size: 40px;
   }
 }
 @media only screen and (max-width: 1680px) {
   #about-container p,
   #about-container ul {
-    font-size: 40px;
+    font-size: 38px;
   }
 }
 @media only screen and (max-width: 1440px) {
   #about-container p,
   #about-container ul {
-    font-size: 38px;
+    font-size: 36px;
   }
 }
 @media only screen and (max-width: 1240px) {
   #about-container p,
   #about-container ul {
-    font-size: 36px;
+    font-size: 34px;
   }
 }
 @media only screen and (max-width: 1080px) {
   #about-container p,
   #about-container ul {
-    font-size: 34px;
+    font-size: 32px;
   }
 }
 @media only screen and (max-width: 960px) {
   #about-container p,
   #about-container ul {
-    font-size: 32px;
+    font-size: 30px;
   }
 }
 @media only screen and (max-width: 840px) {
   #about-container p,
   #about-container ul {
-    font-size: 30px;
+    font-size: 28px;
   }
 }
 @media only screen and (max-width: 640px) {
   #about-container p,
   #about-container ul {
-    font-size: 28px;
+    font-size: 26px;
   }
 }
 @media only screen and (max-width: 560px) {
   #about-container p,
   #about-container ul {
-    font-size: 26px;
+    font-size: 24px;
   }
 }
 @media only screen and (max-width: 480px) {
   #about-container p,
   #about-container ul {
-    font-size: 24px;
+    font-size: 22px;
   }
 }
 @media only screen and (max-width: 400px) {
