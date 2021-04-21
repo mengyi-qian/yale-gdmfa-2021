@@ -1,0 +1,90 @@
+@media only screen and (min-width: 2281px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 64px;
+  }
+}
+@media only screen and (max-width: 2280px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 56px;
+  }
+}
+@media only screen and (max-width: 2140px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 50px;
+  }
+}
+@media only screen and (max-width: 1920px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 44px;
+  }
+}
+@media only screen and (max-width: 1840px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 40px;
+  }
+}
+@media only screen and (max-width: 1680px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 38px;
+  }
+}
+@media only screen and (max-width: 1440px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 36px;
+  }
+}
+@media only screen and (max-width: 1240px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 34px;
+  }
+}
+@media only screen and (max-width: 1080px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 32px;
+  }
+}
+@media only screen and (max-width: 960px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 30px;
+  }
+}
+@media only screen and (max-width: 840px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 28px;
+  }
+}
+@media only screen and (max-width: 640px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 26px;
+  }
+}
+@media only screen and (max-width: 560px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 24px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 22px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  #about-container p,
+  #about-container ul {
+    font-size: 20px;
+  }
+}
