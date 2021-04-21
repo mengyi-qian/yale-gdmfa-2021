@@ -39,17 +39,7 @@ div#video-container {
   overflow: hidden;
   z-index: 1;
 }
-/* 
-#video-container > * {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  pointer-events: none;
-}
- */
+
 #video-container #iframe-container {
   position: absolute;
 }
@@ -150,7 +140,7 @@ a#about {
 }
 #about-container p#credit,
 #about-container p#note {
-  font-size: 0.9em;
+  font-size: 1em;
 }
 
 #about-container p#credit {
