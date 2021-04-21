@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ALL AT ONCE - YALE GD'21</title>
+    <link id="favicon" rel="icon" href="https://cdn.glitch.com/05eaa61e-b555-434a-9ed1-1f00bdcd2e32%2Ffavicon.png?v=1618028934476" type="image/png">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js" defer></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SFVQJJGZPX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SFVQJJGZPX');
+    </script>
+    <style>
+      #about-container {
+        height:100vh;
+        height: calc(var(--vh, 1vh) * 100); /* mobile */
+      }
+      #about-container p#note {
+        padding-bottom: 20px;
+        padding-top: 10px;
+      }
+    </style>
+  </head>  
+  <body>   
+    <div id="gif-container"></div>
+
+    <a id="about">About</a>
+    <div id="about-container">
+      <p>ALL AT ONCE<br>Yale School of Art<br>Graphic Design MFA 2021 Thesis Show</p>
+      <p>On view April 22–28<br>24-hour livestreams here at allatonce.space &<br> Green Hall Gallery during regular hours*</p>
+      <p>All at once—looking back, tripping forward, standing still. All at once—plugged in, displayed, replayed, looped. All at once—planes, edges corners. All at once—outwards, inwards, downwards, backwards. All at once—far away, close by, in motion. All at once—displaced, misplaced, replaced. All at once—everything, nothing, fleeting. All at once.
+</p>
+      <p><i>All at Once</i> brings together the work of this year’s graphic design MFA graduating class through a unique merging of the physical and the virtual of our current environment. From April 22 to April 28, a continuously evolving live feed of work will be broadcasted 24/7 here at allatonce.space—while the physical show will be on view in person at Green Hall Gallery during regular hours.*</p>
+      <p></p>
+      <p>2021 Graduating Class:</p>
+      <ul>
+        <li>Herdimas Anggara</li>
+        <li>Milo Bonacci</li>
+        <li>Bianca Ibarlucea</li>
+        <li>Furqan Jawed</li>
+        <li>Harin Jung</li>
+        <li>Jun Jung</li>
+        <li>Minhwan Kim</li>
+        <li>Nick Massarelli</li>
+        <li>Anezka Minarikova</li>
+        <li>Luiza Dale</li>
+        <li>Ana Lobo</li>
+        <li>Mengyi Qian</li>
+        <li>Anna Sagström</li>
+        <li>Mianwei Wang</li>
+      </ul>
+      <p id="credit">
+        Exhibition Design: Milo Bonacci, Bianca Ibarlucea, Furqan Jawed, Jun Jung, Minhwan Kim, Mengyi Qian
+        <br>
+        Special thanks to Yeju Choi, Sarah Stevens-Morling, Edgar Serrano, and Erin Sparling, for all of your help and support in making this exhibition possible.
+      </p>
+      <p id="note">
+        *The gallery is only open to current members of the SoA community because of Yale University's <a href="https://covid19.yale.edu/yale-statistics">orange covid alert status</a>.
+      </p>
+      
+    </div>
+    
+    <script>
+      const urls = [
+        "https://cdn.glitch.com/05eaa61e-b555-434a-9ed1-1f00bdcd2e32%2F01.gif",
+        "https://cdn.glitch.com/05eaa61e-b555-434a-9ed1-1f00bdcd2e32%2F02.gif",
+        "https://cdn.glitch.com/05eaa61e-b555-434a-9ed1-1f00bdcd2e32%2F03.gif",
+        "https://cdn.glitch.com/05eaa61e-b555-434a-9ed1-1f00bdcd2e32%2F04.gif",
+        "https://cdn.glitch.com/05eaa61e-b555-434a-9ed1-1f00bdcd2e32%2F06.gif",
+        "https://cdn.glitch.com/05eaa61e-b555-434a-9ed1-1f00bdcd2e32%2F07.gif",
+        "https://cdn.glitch.com/05eaa61e-b555-434a-9ed1-1f00bdcd2e32%2F09.gif",
+        "https://cdn.glitch.com/05eaa61e-b555-434a-9ed1-1f00bdcd2e32%2F10.gif"
+      ]
+      
+      
+      const rand = () => {
+        return Math.floor(Math.random() * urls.length)
+      }
+      document.querySelector("#gif-container").innerHTML = `<img src=${urls[rand()]} class="gif">`
+      
+      
+    </script>
+    
+    
+  </body>
+</html>
